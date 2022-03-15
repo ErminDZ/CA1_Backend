@@ -7,10 +7,13 @@ package facades;
 
 import dtos.PersonDTO;
 //import dtos.RenameMeDTO;
+import entities.Address;
 import entities.Person;
 //import entities.RenameMe;
 import javax.persistence.EntityManagerFactory;
 import utils.EMF_Creator;
+
+import java.util.ArrayList;
 
 /**
  *
@@ -21,8 +24,8 @@ public class Populator {
         EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
         FacadeExample fe = FacadeExample.getFacadeExample(emf);
 //        fe.create(new RenameMeDTO(new RenameMe("First 1", "Last 1")));
-        fe.create(new PersonDTO(new Person("hej@Gmail.com","Per","Lars")));
-        fe.create(new PersonDTO(new Person("hey@Gmail.com","Peter","Petersen")));
+        fe.create(new PersonDTO(new Person("hej@Gmail.com","Per","Lars",new ArrayList<>(),new Address())));
+        fe.create(new PersonDTO(new Person("hey@Gmail.com","Peter","Petersen",new ArrayList<>(),new Address())));
 
     }
     

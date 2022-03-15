@@ -1,11 +1,14 @@
 package facades;
 
+import entities.Address;
 import entities.Person;
 import org.junit.jupiter.api.*;
 import utils.EMF_Creator;
 //import entities.RenameMe;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -38,8 +41,8 @@ public class FacadeExampleTest {
         try {
             em.getTransaction().begin();
             em.createNamedQuery("Person.deleteAllRows").executeUpdate();
-            em.persist(new Person("Some txt", "More text", "Even more text"));
-            em.persist(new Person("aaa", "bbb", "ccc"));
+            em.persist(new Person("Some txt", "More text", "Even more text",new ArrayList<>(),new Address()));
+            em.persist(new Person("aaa", "bbb", "ccc",new ArrayList<>(),new Address()));
 
             em.getTransaction().commit();
         } finally {
@@ -56,6 +59,7 @@ public class FacadeExampleTest {
     @Test
     public void testAFacadeMethod() throws Exception {
         assertEquals(2, facade.getPersonCount(), "Expects two rows in the database");
+       // assertEquals(4, facade.getAll(),"Expects two row in the database");
     }
     
 

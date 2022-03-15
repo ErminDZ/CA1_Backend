@@ -1,15 +1,20 @@
 package facades;
 
+import dtos.AddressDTO;
 import dtos.PersonDTO;
 //import dtos.RenameMeDTO;
+import entities.Address;
 import entities.Person;
 //import entities.RenameMe;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 //import errorhandling.RenameMeNotFoundException;
+import entities.Phone;
 import utils.EMF_Creator;
 
 /**
@@ -43,8 +48,9 @@ public class FacadeExample {
     }
     
     public PersonDTO create(PersonDTO p){
-        Person person = new Person(p.getEmail(),p.getFirstname(), p.getLastname());
+        Person person = new Person(p.getEmail(),p.getFirstname(), p.getLastname(), new ArrayList<>(),new Address());
         EntityManager em = getEntityManager();
+
         try {
             em.getTransaction().begin();
             em.persist(person);
@@ -78,6 +84,38 @@ public class FacadeExample {
         TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p", Person.class);
         List<Person> p = query.getResultList();
         return PersonDTO.getDtos(p);
+    }
+
+    public boolean deleteAAddress(long id){
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            Query q = em.createQuery("DELETE FROM Address a WHERE a.id = :id").setParameter("id",id);
+
+            int deletedAddress = q.executeUpdate();
+            System.out.println("You deleted a address: " + deletedAddress);
+
+            em.getTransaction().commit();
+            return true;
+        }finally {
+            em.close();
+        }
+    }
+
+    public boolean deleteAPhone(long id){
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            Query q = em.createQuery("DELETE FROM Phone  p WHERE p.id = :id").setParameter("id",id);
+
+            int deletePhone = q.executeUpdate();
+            System.out.println("You have deleted a phone: " + deletePhone);
+
+            em.getTransaction().commit();
+            return true;
+        }finally {
+            em.close();
+        }
     }
     
     public static void main(String[] args) {

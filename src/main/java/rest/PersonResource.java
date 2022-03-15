@@ -2,6 +2,7 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import dtos.AddressDTO;
 import dtos.PersonDTO;
 import entities.Person;
 import utils.EMF_Creator;
@@ -10,9 +11,7 @@ import facades.FacadeExample;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,5 +46,20 @@ public class PersonResource {
     public String getAll(){
         String persons = String.valueOf(FACADE.getAll());
         return persons;
+    }
+    @Path("person/{id}")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public PersonDTO getById(@PathParam("id") long id){
+        PersonDTO personDTO = FACADE.getById(id);
+        return personDTO;
+    }
+    @Path("create")//virker ikke
+    @POST
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes(MediaType.APPLICATION_JSON)
+    public PersonDTO create(PersonDTO p){
+        PersonDTO person = FACADE.create(p);
+        return person;
     }
 }

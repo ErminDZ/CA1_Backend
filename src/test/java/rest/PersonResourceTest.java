@@ -1,12 +1,14 @@
 package rest;
 
 //import entities.RenameMe;
+import entities.Address;
 import entities.Person;
 import utils.EMF_Creator;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
 import io.restassured.parsing.Parser;
 import java.net.URI;
+import java.util.ArrayList;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.core.UriBuilder;
@@ -65,8 +67,8 @@ public class PersonResourceTest {
     @BeforeEach
     public void setUp() {
         EntityManager em = emf.createEntityManager();
-        p1 = new Person("Some txt", "More text", "Even more text");
-        p2 = new Person("aaa", "bbb","ccc");
+        p1 = new Person("Some txt", "More text", "Even more text",new ArrayList<>(),new Address());
+        p2 = new Person("aaa", "bbb","ccc",new ArrayList<>(),new Address());
         try {
             em.getTransaction().begin();
             em.createNamedQuery("Person.deleteAllRows").executeUpdate();

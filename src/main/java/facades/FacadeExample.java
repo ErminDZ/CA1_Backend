@@ -48,7 +48,7 @@ public class FacadeExample {
     }
     
     public PersonDTO create(PersonDTO p){
-        Person person = new Person(p.getEmail(),p.getFirstname(), p.getLastname(), new ArrayList<>(),new Address());
+        Person person = new Person(p.getEmail(),p.getFirstname(), p.getLastname());
         EntityManager em = getEntityManager();
 
         try {

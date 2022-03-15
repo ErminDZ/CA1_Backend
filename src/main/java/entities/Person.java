@@ -39,12 +39,11 @@ public class Person implements Serializable {
     @JoinColumn(name = "address_id")
     private Address address;
 
-    public Person(String email, String fName, String lName, List<Phone> phone, Address address) {
+    public Person(String email, String fName, String lName) {
         this.email = email;
         this.firstName = fName;
         this.lastName = lName;
-        this.phones = phone;
-        this.address = address;
+
     }
 
 

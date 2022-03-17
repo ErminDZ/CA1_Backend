@@ -117,6 +117,40 @@ public class FacadeExample {
             em.close();
         }
     }
+
+    public boolean deleteAPerson(long id){
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            Query q = em.createQuery("DELETE FROM Person  p WHERE p.id = :id").setParameter("id",id);
+
+            int deletePerson = q.executeUpdate();
+            System.out.println("You have deleted a phone: " + deletePerson);
+
+            em.getTransaction().commit();
+            return true;
+        }finally {
+            em.close();
+        }
+    }
+
+    public PersonDTO editPerson(PersonDTO personDTO){
+        EntityManager em = emf.createEntityManager();
+        try {
+            Person person = em.find(Person.class,personDTO.getId());
+
+            person.setEmail(personDTO.getEmail());
+            person.setFirstName(personDTO.getFirstname());
+            person.setLastName(personDTO.getLastname());
+
+            em.getTransaction().begin();
+            em.merge(person);
+            em.getTransaction().commit();
+            return new PersonDTO(person);
+        }finally {
+            em.close();
+        }
+    }
     
     public static void main(String[] args) {
         emf = EMF_Creator.createEntityManagerFactory();

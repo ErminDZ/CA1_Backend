@@ -11,7 +11,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 //Todo Remove or change relevant parts before ACTUAL use
-@Path("xxx")
+@Path("address")
 public class AddressResource {
 
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
@@ -20,7 +20,7 @@ public class AddressResource {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
 
-    @Path("address/{id}")
+    @Path("delete/{id}")
     @POST
     @Produces({MediaType.APPLICATION_JSON})
     public boolean deleteAAddress(@PathParam("id") long id){

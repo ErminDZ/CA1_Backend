@@ -13,7 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 //Todo Remove or change relevant parts before ACTUAL use
-@Path("xxx")
+@Path("phone")
 public class PhoneResource {
 
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
@@ -22,7 +22,7 @@ public class PhoneResource {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
 
-    @Path("phone/{id}")
+    @Path("delete/{id}")
     @POST
     @Produces({MediaType.APPLICATION_JSON})
     public boolean deleteAAddress(@PathParam("id") long id){

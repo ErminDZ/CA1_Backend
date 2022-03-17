@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 //Todo Remove or change relevant parts before ACTUAL use
-@Path("xxx")
+@Path("person")
 public class PersonResource {
 
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
@@ -47,19 +47,40 @@ public class PersonResource {
         String persons = String.valueOf(FACADE.getAll());
         return persons;
     }
-    @Path("person/{id}")
+    @Path("{id}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public PersonDTO getById(@PathParam("id") long id){
         PersonDTO personDTO = FACADE.getById(id);
         return personDTO;
     }
-    @Path("create")//virker ikke
+
+    @Path("delete/{id}")
+    @DELETE
+    @Produces({MediaType.APPLICATION_JSON})
+    public boolean deleteAPerson(@PathParam("id") long id){
+        boolean person = FACADE.deleteAPerson(id);
+        return person;
+    }
+
+    @Path("create")
     @POST
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes(MediaType.APPLICATION_JSON)
-    public PersonDTO create(PersonDTO p){
-        PersonDTO person = FACADE.create(p);
-        return person;
+    public String create(String person){
+        PersonDTO p = GSON.fromJson(person,PersonDTO.class);
+        PersonDTO pnew =FACADE.create(p);
+        return GSON.toJson(pnew);
+    }
+
+    @Path("edit/{id}")
+    @PUT
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public String editPerson(@PathParam("id") long id, String person){
+        PersonDTO p = GSON.fromJson(person, PersonDTO.class);
+        p.setId(id);
+        PersonDTO pEdited = FACADE.editPerson(p);
+        return GSON.toJson(pEdited);
     }
 }

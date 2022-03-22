@@ -13,6 +13,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,44 +44,44 @@ public class PersonResource {
     @Path("all")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public String getAll(){
+    public Response getAll(){
         String persons = String.valueOf(FACADE.getAll());
-        return persons;
+        return Response.ok(persons).build();
     }
     @Path("{id}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public PersonDTO getById(@PathParam("id") long id){
+    public Response getById(@PathParam("id") long id){
         PersonDTO personDTO = FACADE.getById(id);
-        return personDTO;
+        return Response.ok(personDTO).build();
     }
 
     @Path("delete/{id}")
     @DELETE
     @Produces({MediaType.APPLICATION_JSON})
-    public boolean deleteAPerson(@PathParam("id") long id){
+    public Response deleteAPerson(@PathParam("id") long id){
         boolean person = FACADE.deleteAPerson(id);
-        return person;
+        return Response.ok(person).build();
     }
 
     @Path("create")
     @POST
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes(MediaType.APPLICATION_JSON)
-    public String create(String person){
+    public Response create(String person){
         PersonDTO p = GSON.fromJson(person,PersonDTO.class);
         PersonDTO pnew =FACADE.create(p);
-        return GSON.toJson(pnew);
+        return Response.ok(pnew).build();
     }
 
     @Path("edit/{id}")
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public String editPerson(@PathParam("id") long id, String person){
+    public Response editPerson(@PathParam("id") long id, String person){
         PersonDTO p = GSON.fromJson(person, PersonDTO.class);
         p.setId(id);
         PersonDTO pEdited = FACADE.editPerson(p);
-        return GSON.toJson(pEdited);
+        return Response.ok(pEdited).build();
     }
 }

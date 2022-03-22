@@ -8,6 +8,7 @@ import utils.EMF_Creator;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 //Todo Remove or change relevant parts before ACTUAL use
 @Path("phone")
@@ -20,10 +21,10 @@ public class PhoneResource {
 
 
     @Path("delete/{id}")
-    @POST
+    @DELETE
     @Produces({MediaType.APPLICATION_JSON})
-    public boolean deleteAPhone(@PathParam("id") long id){
+    public Response deleteAPhone(@PathParam("id") long id){
         boolean phone = FACADE.deleteAPhone(id);
-        return phone;
+        return Response.ok(phone).build();
     }
 }

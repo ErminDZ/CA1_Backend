@@ -9,6 +9,7 @@ import utils.EMF_Creator;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 //Todo Remove or change relevant parts before ACTUAL use
 @Path("address")
@@ -21,10 +22,10 @@ public class AddressResource {
 
 
     @Path("delete/{id}")
-    @POST
+    @DELETE
     @Produces({MediaType.APPLICATION_JSON})
-    public boolean deleteAAddress(@PathParam("id") long id){
+    public Response deleteAAddress(@PathParam("id") long id){
         boolean address = FACADE.deleteAAddress(id);
-        return address;
+        return Response.ok(address).build();
     }
 }

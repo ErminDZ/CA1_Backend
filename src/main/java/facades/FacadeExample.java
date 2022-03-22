@@ -1,21 +1,18 @@
 package facades;
 
-import dtos.AddressDTO;
 import dtos.PersonDTO;
 //import dtos.RenameMeDTO;
-import entities.Address;
 import entities.Person;
 //import entities.RenameMe;
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 //import errorhandling.RenameMeNotFoundException;
-import entities.Phone;
 import utils.EMF_Creator;
+
+import java.util.List;
 
 /**
  *

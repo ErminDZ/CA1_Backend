@@ -25,7 +25,7 @@ public class AddressResource {
     @DELETE
     @Produces({MediaType.APPLICATION_JSON})
     public Response deleteAAddress(@PathParam("id") long id){
-        boolean address = FACADE.deleteAAddress(id);
+        Response address = FACADE.deleteAAddress(id);
         return Response.ok(address).build();
     }
 }

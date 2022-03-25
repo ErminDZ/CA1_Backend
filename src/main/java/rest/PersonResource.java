@@ -45,8 +45,8 @@ public class PersonResource {
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public Response getAll(){
-        String persons = String.valueOf(FACADE.getAll());
-        return Response.ok(persons).build();
+        //String persons = String.valueOf(FACADE.getAll());
+        return Response.ok(GSON.toJson(FACADE.getAll())).build();
     }
     @Path("{id}")
     @GET

@@ -2,6 +2,7 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import entities.Phone;
 import facades.FacadeExample;
 import utils.EMF_Creator;
 
@@ -24,7 +25,7 @@ public class PhoneResource {
     @DELETE
     @Produces({MediaType.APPLICATION_JSON})
     public Response deleteAPhone(@PathParam("id") long id){
-        boolean phone = FACADE.deleteAPhone(id);
+        Response phone = FACADE.deleteAPhone(id);
         return Response.ok(phone).build();
     }
 }

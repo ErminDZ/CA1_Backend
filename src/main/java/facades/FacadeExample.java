@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.ws.rs.core.Response;
 
 //import errorhandling.RenameMeNotFoundException;
 import utils.EMF_Creator;
@@ -83,7 +84,7 @@ public class FacadeExample {
         return PersonDTO.getDtos(p);
     }
 
-    public boolean deleteAAddress(long id){
+    public Response deleteAAddress(long id){
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
@@ -93,13 +94,13 @@ public class FacadeExample {
             System.out.println("You deleted a address: " + deletedAddress);
 
             em.getTransaction().commit();
-            return true;
+            return Response.ok(deletedAddress).build();
         }finally {
             em.close();
         }
     }
 
-    public boolean deleteAPhone(long id){
+    public Response deleteAPhone(long id){
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
@@ -109,7 +110,7 @@ public class FacadeExample {
             System.out.println("You have deleted a phone: " + deletePhone);
 
             em.getTransaction().commit();
-            return true;
+            return Response.ok(deletePhone).build();
         }finally {
             em.close();
         }

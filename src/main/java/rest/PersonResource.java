@@ -45,23 +45,20 @@ public class PersonResource {
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public Response getAll(){
-        //String persons = String.valueOf(FACADE.getAll());
         return Response.ok(GSON.toJson(FACADE.getAll())).build();
     }
     @Path("{id}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public Response getById(@PathParam("id") long id){
-        PersonDTO personDTO = FACADE.getById(id);
-        return Response.ok(personDTO).build();
+        return Response.ok(GSON.toJson(FACADE.getById(id))).build();
     }
 
     @Path("delete/{id}")
     @DELETE
     @Produces({MediaType.APPLICATION_JSON})
     public Response deleteAPerson(@PathParam("id") long id){
-        boolean person = FACADE.deleteAPerson(id);
-        return Response.ok(person).build();
+        return Response.ok(GSON.toJson(FACADE.deleteAPerson(id))).build();
     }
 
     @Path("create")

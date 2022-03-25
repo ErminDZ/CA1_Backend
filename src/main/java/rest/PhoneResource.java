@@ -25,7 +25,6 @@ public class PhoneResource {
     @DELETE
     @Produces({MediaType.APPLICATION_JSON})
     public Response deleteAPhone(@PathParam("id") long id){
-        Response phone = FACADE.deleteAPhone(id);
-        return Response.ok(phone).build();
+        return Response.ok(GSON.toJson(FACADE.deleteAPhone(id))).build();
     }
 }

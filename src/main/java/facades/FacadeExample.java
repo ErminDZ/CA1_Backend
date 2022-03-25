@@ -116,7 +116,7 @@ public class FacadeExample {
         }
     }
 
-    public boolean deleteAPerson(long id){
+    public Response deleteAPerson(long id){
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
@@ -126,7 +126,7 @@ public class FacadeExample {
             System.out.println("You have deleted a phone: " + deletePerson);
 
             em.getTransaction().commit();
-            return true;
+            return Response.ok(deletePerson).build();
         }finally {
             em.close();
         }

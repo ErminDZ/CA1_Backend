@@ -1,14 +1,17 @@
 package rest;
 
 //import entities.RenameMe;
+import dtos.PersonDTO;
 import entities.Address;
 import entities.Person;
+import io.restassured.http.ContentType;
 import utils.EMF_Creator;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
 import io.restassured.parsing.Parser;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.core.UriBuilder;
@@ -16,7 +19,10 @@ import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.http.util.HttpStatus;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
-import static org.hamcrest.Matchers.equalTo;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -83,7 +89,7 @@ public class PersonResourceTest {
     @Test
     public void testServerIsUp() {
         System.out.println("Testing is server UP");
-        given().when().get("/xxx").then().statusCode(200);
+        given().when().get("/person").then().statusCode(200);
     }
 
     //This test assumes the database contains two rows
@@ -91,7 +97,7 @@ public class PersonResourceTest {
     public void testDummyMsg() throws Exception {
         given()
                 .contentType("application/json")
-                .get("/xxx/").then()
+                .get("/person/").then()
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
                 .body("msg", equalTo("Hello World"));
@@ -101,9 +107,41 @@ public class PersonResourceTest {
     public void testCount() throws Exception {
         given()
                 .contentType("application/json")
-                .get("/xxx/count").then()
+                .get("/person/count").then()
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
                 .body("count", equalTo(2));
+    }
+
+   // @Test
+    public void getAllPersons(){
+        List<PersonDTO> personsDTOS;
+
+        personsDTOS = given()
+                .contentType("application/json")
+                .when()
+                .get("/person/all")
+                .then()
+                .extract().body().jsonPath().getList("all",PersonDTO.class);
+
+        PersonDTO pd1 = new PersonDTO(p1);
+        PersonDTO pd2 = new PersonDTO(p2);
+
+        assertThat(personsDTOS,containsInAnyOrder(pd1,pd2));
+    }
+
+    @Test
+    public void addPerson(){
+        given()
+                .contentType(ContentType.JSON)
+                .body(new PersonDTO("xxx@gmail.com","Ermin","Dzafic"))
+                .when()
+                .post("person/create")
+                .then()
+
+                .body("email",equalTo("xxx@gmail.com"))
+                .body("firstname",equalTo("Ermin"))
+                .body("lastname", equalTo("Dzafic"))
+                .body("id",notNullValue());
     }
 }

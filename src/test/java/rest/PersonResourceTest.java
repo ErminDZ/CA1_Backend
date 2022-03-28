@@ -113,23 +113,6 @@ public class PersonResourceTest {
                 .body("count", equalTo(2));
     }
 
-   // @Test
-    public void getAllPersons(){
-        List<PersonDTO> personsDTOS;
-
-        personsDTOS = given()
-                .contentType("application/json")
-                .when()
-                .get("/person/all")
-                .then()
-                .extract().body().jsonPath().getList("all",PersonDTO.class);
-
-        PersonDTO pd1 = new PersonDTO(p1);
-        PersonDTO pd2 = new PersonDTO(p2);
-
-        assertThat(personsDTOS,containsInAnyOrder(pd1,pd2));
-    }
-
     @Test
     public void addPerson(){
         given()

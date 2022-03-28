@@ -58,8 +58,10 @@ public class FacadeExampleTest {
     // TODO: Delete or change this method 
     @Test
     public void testAFacadeMethod() throws Exception {
-        assertEquals(2, facade.getPersonCount(), "Expects two rows in the database");
-       // assertEquals(4, facade.getAll(),"Expects two row in the database");
+        //assertEquals(2, facade.getPersonCount(), "Expects two rows in the database");
+        //assertEquals(2, facade.getAll().size(),"Expects two rows in the database");
+        //assertEquals(1,facade.getById(1).getId(),"Expects a person with id of 1");
+
     }
     
 
